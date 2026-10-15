@@ -1,8 +1,8 @@
 # 🎃 Trivial de Halloween - Escape Room Interactivo
 
-Bienvenido al repositorio oficial del **Trivial de Halloween**, una aplicación web interactiva diseñada como prueba principal para un Escape Room infantil. 
+Bienvenido al repositorio oficial del **Trivial de Halloween**, una aplicación web interactiva diseñada como prueba principal para un Escape Room. 
 
-Este proyecto es una colaboración interdisciplinar entre el departamento de Informática (Desarrollo de la aplicación) y los alumnos de 1º de Educación Infantil (Diseño pedagógico y pruebas).
+Este proyecto es una colaboración interdisciplinar entre los alumnos de 2º Desarrollo de Aplicaciones Web y los alumnos de 1º de Educación Infantil (Diseño pedagógico y pruebas).
 
 ---
 
