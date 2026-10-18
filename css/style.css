@@ -1,0 +1,111 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    background-color: #050505;
+    background-image: radial-gradient(circle, #2a0808 0%, #050505 80%);
+    color: #d3d3d3;
+    font-family: 'Special Elite', monospace, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+
+header {
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-family: 'Creepster', cursive;
+    color: #8b0000;
+    font-size: 3.5rem;
+    text-shadow: 2px 2px 5px #000, 0 0 20px #8b0000;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+
+form {
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid #330000;
+    border-radius: 8px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 0 25px rgba(139, 0, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    color: #b3a7a7;
+    font-size: 1rem;
+    margin-bottom: -5px;
+    text-shadow: 1px 1px 2px black;
+}
+
+
+input,
+select {
+    background-color: #111;
+    color: #ff3333;
+    border: 1px solid #4a0404;
+    padding: 12px;
+    border-radius: 4px;
+    font-family: 'Special Elite', monospace;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+        
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #ff0000;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+input::placeholder {
+    color: #444;
+    font-size: 0.8rem;
+}
+
+
+button {
+    margin-top: 20px;
+    background-color: #5c0000;
+    color: #fff;
+    font-family: 'Special Elite', monospace;
+    font-size: 1.2rem;
+    padding: 15px;
+    border: 1px solid #2e0000;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 2px 2px 4px #000;
+    text-transform: uppercase;
+}
+
+        
+button:hover {
+    background-color: #8b0000;
+    border-color: #ff0000;
+    box-shadow: 0 0 20px #ff0000;
+    transform: scale(1.02);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
