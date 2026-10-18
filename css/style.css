@@ -46,6 +46,14 @@ form {
     gap: 15px;
 }
 
+#contenedor-integrantes {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin-top: 40px;
+}
+
 label {
     color: #b3a7a7;
     font-size: 1rem;
@@ -64,6 +72,7 @@ select {
     font-family: 'Special Elite', monospace;
     font-size: 1rem;
     transition: all 0.3s ease;
+    
 }
 
         

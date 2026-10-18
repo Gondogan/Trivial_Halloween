@@ -14,7 +14,7 @@ export function quitarCalabaza() {
 }
 
 export function pintarEquipoLateral() {
-
+    
 }
 
 export function pintarCronometroLateral() {
@@ -26,5 +26,5 @@ export function setCronometro() {
 }
 
 export function pintarPuntuacion() {
-
+    
 }
