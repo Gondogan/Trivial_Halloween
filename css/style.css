@@ -1,9 +1,11 @@
+/* =========================================
+   1. ESTILOS GLOBALES Y RESETEO
+========================================= */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-
 
 body {
     background-color: #050505;
@@ -16,23 +18,40 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
+    overflow-x: hidden;
 }
 
-
+/* =========================================
+   2. TÍTULOS (Sombra blanca definida y Título Gigante)
+========================================= */
 header {
+    margin-top: 30px; /* Este es el margen nuevo que baja el título */
     margin-bottom: 30px;
 }
 
-header h1 {
+header h1, .pregunta-titulo {
     font-family: 'Creepster', cursive;
     color: #8b0000;
-    font-size: 3.5rem;
-    text-shadow: 2px 2px 5px #000, 0 0 20px #8b0000;
+    text-shadow: 
+        2px 2px 3px #000,    
+        0 0 4px #ffffff,     
+        0 0 8px #ffffff;     
     letter-spacing: 3px;
     text-align: center;
 }
 
+header h1 {
+    font-size: 4.8rem; 
+}
 
+.pregunta-titulo {
+    font-size: 2.6rem; 
+    margin-bottom: 40px;
+}
+
+/* =========================================
+   3. PANTALLA 1: FORMULARIO DE LOGIN
+========================================= */
 form {
     background: rgba(10, 10, 10, 0.9);
     border: 1px solid #330000;
@@ -53,9 +72,7 @@ label {
     text-shadow: 1px 1px 2px black;
 }
 
-
-input,
-select {
+input, select {
     background-color: #111;
     color: #ff3333;
     border: 1px solid #4a0404;
@@ -66,9 +83,7 @@ select {
     transition: all 0.3s ease;
 }
 
-        
-input:focus,
-select:focus {
+input:focus, select:focus {
     outline: none;
     border-color: #ff0000;
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
@@ -81,8 +96,7 @@ input::placeholder {
     font-size: 0.8rem;
 }
 
-
-button {
+button[type="submit"], #empezar {
     margin-top: 20px;
     background-color: #5c0000;
     color: #fff;
@@ -97,15 +111,163 @@ button {
     text-transform: uppercase;
 }
 
-        
-button:hover {
+button[type="submit"]:hover, #empezar:hover {
     background-color: #8b0000;
     border-color: #ff0000;
     box-shadow: 0 0 20px #ff0000;
     transform: scale(1.02);
 }
 
-button:active {
+button[type="submit"]:active, #empezar:active {
     transform: scale(0.98);
 }
 
+/* =========================================
+   4. PANTALLA 2: INTERFAZ DE JUEGO
+========================================= */
+/* Vidas (Calabazas - 3 arriba, 3 abajo) */
+.contenedor-vidas {
+    margin-top: 120px;
+    margin-right: 200px;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 10px; 
+    font-size: 2.8rem; 
+}
+
+.calabaza {
+    transition: all 0.5s ease;
+    filter: drop-shadow(0 0 10px #ff6600); 
+}
+
+.calabaza.inactiva {
+    filter: grayscale(100%) brightness(30%);
+    opacity: 0.5;
+    transform: scale(0.85);
+}
+
+/* Contenedor para centrar la tarjeta */
+.contenedor-juego {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Tarjeta Tétrica */
+.tarjeta-pregunta {
+    background: linear-gradient(135deg, #1a0b0b 0%, #0a0000 100%);
+    border: 3px solid #4a1515;
+    border-radius: 2px 25px 3px 30px; 
+    padding: 60px 50px; 
+    width: 95%;
+    max-width: 850px; 
+    text-align: center;
+    box-shadow: 0 0 40px rgba(204, 0, 0, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.9);
+    position: relative;
+}
+
+/* Telarañas */
+.tarjeta-pregunta::before {
+    content: "🕸️";
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    font-size: 4rem; 
+    opacity: 0.3;
+    transform: rotate(-45deg);
+}
+
+.tarjeta-pregunta::after {
+    content: "🕸️";
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 4rem;
+    opacity: 0.3;
+}
+
+/* Cuadrícula de respuestas */
+.respuestas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px; 
+    position: relative;
+}
+
+/* Fantasma animado */
+.respuestas-grid::before {
+    content: "👻";
+    position: absolute;
+    top: -60px;
+    right: -20px;
+    font-size: 3rem;
+    opacity: 0.7;
+    animation: flotar 3s ease-in-out infinite;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Botones de respuesta base */
+.btn-respuesta {
+    margin-top: 0;
+    background-color: #140505;
+    color: #d3d3d3;
+    border: 2px dashed #6b2424; 
+    padding: 25px; 
+    font-size: 1.3rem; 
+    font-family: 'Special Elite', monospace;
+    border-radius: 4px 15px 4px 15px; 
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+}
+
+/* Base del hover (movimiento y cambio de fondo) */
+.btn-respuesta:hover {
+    background-color: #3d0d0d;
+    color: #fff;
+    border-style: solid;
+    transform: translateY(-3px) rotate(1deg); 
+}
+
+/* 🎃 Botón 1: Hover Naranja Calabaza */
+.btn-respuesta:nth-child(1):hover {
+    border-color: #ff6600;
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
+}
+
+/* 🧙‍♀️ Botón 2: Hover Morado Bruja */
+.btn-respuesta:nth-child(2):hover {
+    border-color: #9900ff;
+    box-shadow: 0 0 15px rgba(153, 0, 255, 0.6);
+}
+
+/* 🧪 Botón 3: Hover Verde Tóxico */
+.btn-respuesta:nth-child(3):hover {
+    border-color: #00cc00;
+    box-shadow: 0 0 15px rgba(0, 204, 0, 0.6);
+}
+
+/* 🩸 Botón 4: Hover Rojo Sangre */
+.btn-respuesta:nth-child(4):hover {
+    border-color: #ff0000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+}
+
+/* =========================================
+   5. ANIMACIONES
+========================================= */
+@keyframes flotar {
+    0%, 100% { 
+        transform: translateY(0); 
+    }
+    50% { 
+        transform: translateY(-15px) rotate(5deg); 
+    }
+}

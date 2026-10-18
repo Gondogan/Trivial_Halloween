@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego - Trivial Halloween</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>TRIVIAL HALLOWEEN</h1>
+    </header>
+
+    <!-- Contenedor superior para las vidas (6 en total) -->
+    <div class="contenedor-vidas">
+        <span class="calabaza activa">🎃</span>
+        <span class="calabaza activa">🎃</span>
+        <span class="calabaza activa">🎃</span>
+        <span class="calabaza activa">🎃</span>
+        <span class="calabaza inactiva">🎃</span> <!-- Vida perdida -->
+        <span class="calabaza inactiva">🎃</span> <!-- Vida perdida -->
+    </div>
+
+    <!-- Contenedor central con la tarjeta de la pregunta -->
+    <main class="contenedor-juego">
+        <div class="tarjeta-pregunta">
+            <h2 class="pregunta-titulo">¿Qué monstruo se transforma con la luna llena?</h2>
+            <div class="respuestas-grid">
+                <button class="btn-respuesta">Zombi</button>
+                <button class="btn-respuesta">Vampiro</button>
+                <button class="btn-respuesta">Hombre Lobo</button>
+                <button class="btn-respuesta">Fantasma</button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
