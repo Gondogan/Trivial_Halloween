@@ -1,3 +1,9 @@
+// Objeto que guardará la información global de la partida
+export const estado = {
+    calabazas: 4, // Empiezan con 4 vidas activas
+    tiempoFinal: null
+};
+
 export function sumarCalabaza() {
     estado.calabazas += 1;
     if(estado.calabazas === 5) {
