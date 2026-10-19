@@ -5,38 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivial Halloween</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ruleta.css">
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
-    <script src="script.js" type="module"></script>
-</head>
+    <script src="./js/app.js" type="module" defer></script>
+    <script src="./js/ruleta.js" type="module" defer></script>
+    </head>
 
 <body>
+
     <header>
         <h1>TRIVIAL HALLOWEEN</h1>
     </header>
 
-    <form action="post">
-        <label for="nombre-grupo">Nombre del grupo</label>
-        <input type="text" name="nombre-grupo" id="input-nombre">
+    <section id="pantallaRegistro">
 
-        <label for="numero-integrantes">¿Cuántos integrantes tiene el grupo?</label>
-        <select name="numero-integrantes" id="numero-integrantes">
-            <option value="3" selected>3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-        </select>
+        <form>
+            <label for="nombre-grupo">Nombre del grupo</label>
+            <input type="text" name="nombre-grupo" id="grupo">
 
-        <label for="integrante-1">Nombre / Instagram primer integrante</label>
-        <input type="text" name="integrante-1" id="integrante-1" placeholder="INTRODUCE TU NOMBRE O IG">
-        <label for="integrante-2">Nombre / Instagram segundo integrante</label>
-        <input type="text" name="integrante-2" id="integrante-2" placeholder="INTRODUCE TU NOMBRE O IG">
-        <label for="integrante-3">Nombre / Instagram tercero integrante</label>
-        <input type="text" name="integrante-3" id="integrante-3" placeholder="INTRODUCE TU NOMBRE O IG">
-        <label for="integrante-4">Nombre / Instagram cuarto integrante</label>
-        <input type="text" name="integrante-4" id="integrante-4" placeholder="INTRODUCE TU NOMBRE O IG">
-        
-        <button submit="empezar" id="empezar">EMPEZAR JUEGO</button>
+            <label for="numero-integrantes">¿Cuántos integrantes tiene el grupo?</label>
+            <select name="numero-integrantes" id="numero-integrantes">
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
 
-    </form>
+            <div id="contenedor-integrantes"></div>
+            
+            <button id="empezar">EMPEZAR JUEGO</button>
 
+        </form>
+    </section>
+
+    <!-- Nuevo panel izquierdo para el Temporizador -->
+    <section class="panel-izquierdo oculto" id="panelIzquierdo">
+        <div class="contenedor-tiempo">
+            <span class="reloj-arena">⏳</span>
+            <span class="tiempo-texto">0:00</span>
+            <span class="calavera">💀</span>
+        </div>
+    </section>
+
+    <!-- Panel derecho para el Grupo y las Vidas -->
+    <section class="panel-derecho oculto" id="panelDerecho">
+        <h3 class="nombre-grupo">Los  Del Fondo</h3>
+
+        <div class="contenedor-vidas">
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza inactiva">🎃</span> 
+            <span class="calabaza inactiva">🎃</span> 
+        </div>
+    </section>
+
+    <section class="contenedor-ruleta oculto" id="pantallaRuleta">
+
+        <div class="puntero"></div>
+
+        <div id="ruleta" class="ruleta">
+
+            <div class="linea"></div>
+            <div class="linea"></div>
+            <div class="linea"></div>
+            <div class="linea"></div>
+
+            <span class="opcion">Pregunta</span>
+            <span class="opcion">Castigo</span>
+            <span class="opcion">Ganar Tiempo</span>
+            <span class="opcion">Pregunta</span>
+            <span class="opcion">Pregunta</span>
+            <span class="opcion">Castigo</span>
+            <span class="opcion">Perder Tiempo</span>
+            <span class="opcion">Pregunta</span>
+
+        </div>
+
+
+    </div>
+
+    <!-- Contenedor central con la tarjeta de la pregunta -->
+    <main class="contenedor-juego oculto" id="pantallaPreguntas">
+        <div class="tarjeta-pregunta">
+            <h2 class="pregunta-titulo">¿Qué monstruo se transforma con la luna llena?</h2>
+            <div class="respuestas-grid">
+                <button class="btn-respuesta">Zombi</button>
+                <button class="btn-respuesta">Vampiro</button>
+                <button class="btn-respuesta">Hombre Lobo</button>
+                <button class="btn-respuesta">Fantasma</button>
+            </div>
+        </div>
+    </main>
+    
 </body>
 </html>
