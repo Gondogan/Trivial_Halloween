@@ -1,5 +1,5 @@
-import { seleccionIntegrantes, pintarIntegrantes, validarInputs, cambioRuleta } from "./ui";
-import { guardarGrupo } from "./state";
+import { seleccionIntegrantes, pintarIntegrantes, validarInputs, cambioRuleta } from "./ui.js";
+import { guardarGrupo, iniciarCronometro } from './state.js';
 
 const button = document.getElementById('empezar');
 
@@ -11,7 +11,7 @@ const iniciarJuego = () => {
 
     guardarGrupo();
     cambioRuleta();
-    // Iniciar cronometro aqui
+    iniciarCronometro();
 }
 
 const iniciarApp = () => {

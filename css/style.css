@@ -13,7 +13,7 @@ body {
         /* 1. Capa superior: El degradado oscuro semitransparente (ajusta el 0.85 para más o menos oscuridad) */
         radial-gradient(circle, rgba(42, 8, 8, 0.5) 0%, rgba(5, 5, 5, 0.9) 80%),
         /* 2. Capa inferior: Tu imagen */
-        url(../imgs/fondo.jfif);
+        url(../imgs/fondo1.jfif);
     
     background-size: cover;
     background-position: center;
@@ -351,6 +351,11 @@ button[type="submit"]:active, #empezar:active {
     border-color: #ff0000;
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
 }
+
+.oculto {
+    display: none !important;
+}
+
 
 /* =========================================
    6. ANIMACIONES

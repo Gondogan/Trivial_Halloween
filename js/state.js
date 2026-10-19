@@ -2,9 +2,9 @@
  * ARCHIVO PARA GESTION DE DATOS, GRUPOS Y ESTADOS
  */
 
-import { infoGrupos } from "../assets/data/usuarios";
-import { divIntegrantes } from "./ui";
-import { grupo } from "./ui";
+import { infoGrupos } from "../assets/data/usuarios.js";
+import { divIntegrantes } from "./ui.js";
+import { grupo } from "./ui.js";
 
 export const guardarGrupo = () => {
     let integrantes = [];
@@ -24,7 +24,7 @@ export const guardarGrupo = () => {
     console.log(infoGrupos);
 }
 
-export function sumarCalabaza() {
+export const sumarCalabaza = () => {
     estado.calabazas += 1;
     if(estado.calabazas === 5) {
         // Detener cronometro y cambiar a la pantalla final
@@ -32,25 +32,48 @@ export function sumarCalabaza() {
     }
 }
 
-export function quitarCalabaza() {
+export const quitarCalabaza = () => {
     estado.calabazas -= 1;
     if(estado.calabazas < 0){
         // estado.calabazas = 0;
     }
 }
 
-export function pintarEquipoLateral() {
+export const pintarEquipoLateral = () => {
     
 }
 
-export function pintarCronometroLateral() {
+let intervaloCronometro = null;
+let segundosTranscurridos = 0;
 
-}
+export const iniciarCronometro = () => {
+    
+    const tiempoTexto = document.querySelector('.tiempo-texto');
 
-export function setCronometro() {
+    clearInterval(intervaloCronometro);
+    segundosTranscurridos = 0;
+    tiempoTexto.textContent = "0:00";
 
-}
+    intervaloCronometro = setInterval(() => {
+        segundosTranscurridos++;
 
-export function pintarPuntuacion() {
+        const minutos = Math.floor(segundosTranscurridos / 60);
+        const segundos = segundosTranscurridos % 60;
+
+        const segundosFormateados = segundos < 10 ? `0${segundos}` : segundos;
+
+        tiempoTexto.textContent = `${minutos}:${segundosFormateados}`;
+        
+    }, 1000);
+};
+
+export const pararCronometro = () => {
+
+    clearInterval(intervaloCronometro);
+    
+    return segundosTranscurridos;
+};
+
+export const pintarPuntuacion = () => {
     
 }

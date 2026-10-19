@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivial Halloween</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ruleta.css">
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
-    <script src="./js/script.js" type="module"></script>
-</head>
+    <script src="./js/app.js" type="module" defer></script>
+    <script src="./js/ruleta.js" type="module" defer></script>
+    </head>
 
 <body>
 
@@ -15,7 +17,7 @@
         <h1>TRIVIAL HALLOWEEN</h1>
     </header>
 
-    <section id="pantallaRegistro"></section>
+    <section id="pantallaRegistro">
 
         <form>
             <label for="nombre-grupo">Nombre del grupo</label>
@@ -34,6 +36,67 @@
 
         </form>
     </section>
+
+    <!-- Nuevo panel izquierdo para el Temporizador -->
+    <section class="panel-izquierdo oculto" id="panelIzquierdo">
+        <div class="contenedor-tiempo">
+            <span class="reloj-arena">⏳</span>
+            <span class="tiempo-texto">0:00</span>
+            <span class="calavera">💀</span>
+        </div>
+    </section>
+
+    <!-- Panel derecho para el Grupo y las Vidas -->
+    <section class="panel-derecho oculto" id="panelDerecho">
+        <h3 class="nombre-grupo">Los  Del Fondo</h3>
+
+        <div class="contenedor-vidas">
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza inactiva">🎃</span> 
+            <span class="calabaza inactiva">🎃</span> 
+        </div>
+    </section>
+
+    <section class="contenedor-ruleta oculto" id="pantallaRuleta">
+
+        <div class="puntero"></div>
+
+        <div id="ruleta" class="ruleta">
+
+            <div class="linea"></div>
+            <div class="linea"></div>
+            <div class="linea"></div>
+            <div class="linea"></div>
+
+            <span class="opcion">Pregunta</span>
+            <span class="opcion">Castigo</span>
+            <span class="opcion">Ganar Tiempo</span>
+            <span class="opcion">Pregunta</span>
+            <span class="opcion">Pregunta</span>
+            <span class="opcion">Castigo</span>
+            <span class="opcion">Perder Tiempo</span>
+            <span class="opcion">Pregunta</span>
+
+        </div>
+
+
+    </div>
+
+    <!-- Contenedor central con la tarjeta de la pregunta -->
+    <main class="contenedor-juego oculto" id="pantallaPreguntas">
+        <div class="tarjeta-pregunta">
+            <h2 class="pregunta-titulo">¿Qué monstruo se transforma con la luna llena?</h2>
+            <div class="respuestas-grid">
+                <button class="btn-respuesta">Zombi</button>
+                <button class="btn-respuesta">Vampiro</button>
+                <button class="btn-respuesta">Hombre Lobo</button>
+                <button class="btn-respuesta">Fantasma</button>
+            </div>
+        </div>
+    </main>
     
 </body>
 </html>

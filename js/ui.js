@@ -47,5 +47,10 @@ export const cambioRuleta = () => {
     registro.classList.add('oculto');
 
     const ruleta = document.getElementById('pantallaRuleta');
+    const panelIzquierdo = document.getElementById('panelIzquierdo')
+    const panelDerecho = document.getElementById('panelDerecho')
     ruleta.classList.remove('oculto');
+    panelIzquierdo.classList.remove('oculto');
+    panelDerecho.classList.remove('oculto');
+    
 }
