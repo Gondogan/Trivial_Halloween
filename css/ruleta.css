@@ -1,0 +1,124 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.contenedor-ruleta {
+    --tamano-ruleta: 350px;
+
+    position: relative;
+    width: var(--tamano-ruleta);
+    text-align: center;
+}
+
+.ruleta {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+}
+
+.ruleta {
+    position: relative;
+
+    width: 350px;
+    height: 350px;
+
+    border-radius: 50%;
+    border: 5px solid #333;
+
+    box-sizing: border-box;
+    overflow: hidden;
+    cursor: pointer;
+
+    background: conic-gradient(
+        from -22.5deg,
+        #3498db 0deg 45deg,
+        #e74c3c 45deg 90deg,
+        #e67e22 90deg 135deg,
+        #3498db 135deg 180deg,
+        #3498db 180deg 225deg,
+        #f1c40f 225deg 270deg,
+        #000000 270deg 315deg,
+        #3498db 315deg 360deg
+    );
+
+    transition: transform 4s ease-out;
+    cursor: pointer;
+}
+
+.linea {
+    position: absolute;
+
+    width: 2px;
+    height: 100%;
+
+    background-color: white;
+
+    top: 50%;
+    left: 50%;
+
+    transform-origin: center;
+    z-index: 1;
+}
+
+.linea:nth-child(1) {
+    transform: translate(-50%, -50%) rotate(22.5deg);
+}
+
+.linea:nth-child(2) {
+    transform: translate(-50%, -50%) rotate(67.5deg);
+}
+
+.linea:nth-child(3) {
+    transform: translate(-50%, -50%) rotate(112.5deg);
+}
+
+.linea:nth-child(4) {
+    transform: translate(-50%, -50%) rotate(157.5deg);
+}
+
+.puntero {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+
+    width: 0;
+    height: 0;
+
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 30px solid #222;
+}
+
+.opcion {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+
+    white-space: nowrap;
+    z-index: 2;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(var(--angulo))
+        translateY(-120px);
+}
+
+.opcion:nth-of-type(1) { --angulo: 0deg; }
+.opcion:nth-of-type(2) { --angulo: 45deg; }
+.opcion:nth-of-type(3) { --angulo: 90deg; }
+.opcion:nth-of-type(4) { --angulo: 135deg; }
+.opcion:nth-of-type(5) { --angulo: 180deg; }
+.opcion:nth-of-type(6) { --angulo: 225deg; }
+.opcion:nth-of-type(7) { --angulo: 270deg; }
+.opcion:nth-of-type(8) { --angulo: 315deg; }
