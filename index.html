@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivial Halloween</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/ruleta.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
     <script src="./js/app.js" type="module" defer></script>
     <script src="./js/ruleta.js" type="module" defer></script>
@@ -61,32 +61,33 @@
     </section>
 
     <section class="contenedor-ruleta oculto" id="pantallaRuleta">
+        <!-- ESTE ES EL CONTENEDOR CLAVE QUE FALTABA -->
+        <div class="contenedor-ruleta-juego">
 
-        <div class="puntero"></div>
+            <div class="puntero"></div>
 
-        <div id="ruleta" class="ruleta">
+            <div id="ruleta" class="ruleta">
+                <div class="linea"></div>
+                <div class="linea"></div>
+                <div class="linea"></div>
+                <div class="linea"></div>
 
-            <div class="linea"></div>
-            <div class="linea"></div>
-            <div class="linea"></div>
-            <div class="linea"></div>
-
-            <span class="opcion">Pregunta</span>
-            <span class="opcion">Castigo</span>
-            <span class="opcion">Ganar Tiempo</span>
-            <span class="opcion">Pregunta</span>
-            <span class="opcion">Pregunta</span>
-            <span class="opcion">Castigo</span>
-            <span class="opcion">Perder Tiempo</span>
-            <span class="opcion">Pregunta</span>
+                <!-- Opciones ordenadas EXACTAMENTE igual que en JS y CSS -->
+                <span class="opcion">Pregunta</span>
+                <span class="opcion">Castigo</span>
+                <span class="opcion">Pregunta</span>
+                <span class="opcion">Ganar Tiempo</span>
+                <span class="opcion">Pregunta</span>
+                <span class="opcion">Castigo</span>
+                <span class="opcion">Pregunta</span>
+                <span class="opcion">Perder Tiempo</span>
+            </div>
 
         </div>
-
-
-    </div>
+    </section>
 
     <!-- Contenedor central con la tarjeta de la pregunta -->
-    <main class="contenedor-juego oculto" id="pantallaPreguntas">
+    <main class="contenedor-juego " id="pantallaPreguntas">
         <div class="tarjeta-pregunta">
             <h2 class="pregunta-titulo">¿Qué monstruo se transforma con la luna llena?</h2>
             <div class="respuestas-grid">
