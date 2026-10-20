@@ -5,12 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const opciones = [
         "Pregunta",
-        "Castigo",
-        "Pregunta",
-        "Ganar Tiempo",
-        "Pregunta",
-        "Castigo",
-        "Pregunta",
+ 
         "Perder Tiempo"
     ];
 
