@@ -5,13 +5,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const opciones = [
         "Pregunta",
-        "Castigo",
-        "Ganar Tiempo",
-        "Pregunta",
-        "Pregunta",
-        "Castigo",
-        "Perder Tiempo",
-        "Pregunta"
+ 
+        "Perder Tiempo"
     ];
 
     let estadoRuleta = 'esperandoAlClic';
