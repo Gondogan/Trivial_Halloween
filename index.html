@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivial Halloween - Escape Room</title>
-    <!-- Enlazamos los dos CSS -->
-    <link rel="stylesheet" href="./css/style.css">
+    <title>Trivial Halloween</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ruleta.css">
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
-    
-    <!-- Enlazamos los JS -->
-    <script src="./js/script.js" type="module" defer></script>
-    <script src="./js/ruleta.js" defer></script>
-</head>
+    <script src="./js/app.js" type="module" defer></script>
+    <script src="./js/ruleta.js" type="module" defer></script>
+    </head>
+
 <body>
+
     <header>
         <h1>TRIVIAL HALLOWEEN</h1>
     </header>
 
-    <!-- =========================================
-         SECCIÓN 1: LOGIN
-    ========================================== -->
-    <section id="pantalla-login" class="pantalla activa">
-        <form id="formulario-login">
-            <label for="input-nombre">Nombre del grupo</label>
-            <input type="text" name="nombre-grupo" id="input-nombre" required>
+    <section id="pantallaRegistro">
+
+        <form>
+            <label for="nombre-grupo">Nombre del grupo</label>
+            <input type="text" name="nombre-grupo" id="grupo">
 
             <label for="numero-integrantes">¿Cuántos integrantes tiene el grupo?</label>
             <select name="numero-integrantes" id="numero-integrantes">
@@ -32,85 +30,73 @@
                 <option value="5">5</option>
             </select>
 
-            <label for="integrante-1">Nombre / Instagram primer integrante</label>
-            <input type="text" name="integrante-1" id="integrante-1" placeholder="INTRODUCE TU NOMBRE O IG" required>
+            <div id="contenedor-integrantes"></div>
             
-            <label for="integrante-2">Nombre / Instagram segundo integrante</label>
-            <input type="text" name="integrante-2" id="integrante-2" placeholder="INTRODUCE TU NOMBRE O IG" required>
-            
-            <label for="integrante-3">Nombre / Instagram tercer integrante</label>
-            <input type="text" name="integrante-3" id="integrante-3" placeholder="INTRODUCE TU NOMBRE O IG" required>
-            
-            <label for="integrante-4" class="oculto">Nombre / Instagram cuarto integrante</label>
-            <input type="text" name="integrante-4" id="integrante-4" placeholder="INTRODUCE TU NOMBRE O IG" class="oculto">
-            
-            <button type="submit" id="registrar">EMPEZAR JUEGO</button>
+            <button id="empezar">EMPEZAR JUEGO</button>
+
         </form>
     </section>
 
-
-<!-- =========================================
-         SECCIÓN 2: JUEGO
-    ========================================== -->
-    <section id="pantalla-juego" class="pantalla oculto">
-        
-        <!-- Panel Izquierdo (Tiempo) -->
-        <div class="panel-izquierdo">
-            <div class="contenedor-tiempo">
-                <span class="reloj-arena">⏳</span>
-                <span class="tiempo-texto">0:00</span>
-                <span class="calavera">💀</span>
-            </div>
+    <!-- Nuevo panel izquierdo para el Temporizador -->
+    <section class="panel-izquierdo oculto" id="panelIzquierdo">
+        <div class="contenedor-tiempo">
+            <span class="reloj-arena">⏳</span>
+            <span class="tiempo-texto">0:00</span>
+            <span class="calavera">💀</span>
         </div>
-
-        <!-- Panel Derecho (Grupo y Vidas) -->
-        <div class="panel-derecho">
-            <h3 class="nombre-grupo" id="nombre-grupo-display">Los Del Fondo</h3>
-            <div class="contenedor-vidas">
-                <span class="calabaza activa">🎃</span>
-                <span class="calabaza activa">🎃</span>
-                <span class="calabaza activa">🎃</span>
-                <span class="calabaza activa">🎃</span>
-                <span class="calabaza inactiva">🎃</span> 
-                <span class="calabaza inactiva">🎃</span> 
-            </div>
-        </div>
-
-        <!-- CENTRO: Ruleta y Tarjeta Apiladas -->
-        <main class="zona-juego-central">
-            
-            <!-- 1. La Ruleta -->
-            <div class="contenedor-ruleta-juego">
-                <div class="puntero"></div>
-                <div id="ruleta" class="ruleta">
-                    <div class="linea"></div>
-                    <div class="linea"></div>
-                    <div class="linea"></div>
-                    <div class="linea"></div>
-                    <span class="opcion">Pregunta</span>
-                    <span class="opcion">Castigo</span>
-                    <span class="opcion">Pregunta</span>
-                    <span class="opcion">Ganar Tiempo</span>
-                    <span class="opcion">Pregunta</span>
-                    <span class="opcion">Castigo</span>
-                    <span class="opcion">Pregunta</span>
-                    <span class="opcion">Perder Tiempo</span>
-                    
-                </div>
-            </div>
-
-            <!-- 2. La Tarjeta (Visible por defecto debajo de la ruleta) -->
-            <div class="contenedor-tarjeta-estatica">
-                <div class="tarjeta-pregunta">
-                    <h2 class="pregunta-titulo" id="texto-pregunta">¿Qué monstruo se transforma con la luna llena?</h2>
-                    <div class="respuestas-grid">
-                        <button class="btn-respuesta">Zombi</button>
-                        <button class="btn-respuesta">Vampiro</button>
-                        <button class="btn-respuesta">Hombre Lobo</button>
-                        <button class="btn-respuesta">Fantasma</button>
-                    </div>
-                </div>
-            </div>
-
-        </main>
     </section>
+
+    <!-- Panel derecho para el Grupo y las Vidas -->
+    <section class="panel-derecho oculto" id="panelDerecho">
+        <h3 class="nombre-grupo">Los  Del Fondo</h3>
+
+        <div class="contenedor-vidas">
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza activa">🎃</span>
+            <span class="calabaza inactiva">🎃</span> 
+            <span class="calabaza inactiva">🎃</span> 
+        </div>
+    </section>
+
+    <section class="contenedor-ruleta oculto" id="pantallaRuleta">
+
+        <div class="puntero"></div>
+
+        <div id="ruleta" class="ruleta">
+
+            <div class="linea"></div>
+            <div class="linea"></div>
+            <div class="linea"></div>
+            <div class="linea"></div>
+
+            <span class="opcion">Pregunta</span>
+            <span class="opcion">Castigo</span>
+            <span class="opcion">Ganar Tiempo</span>
+            <span class="opcion">Pregunta</span>
+            <span class="opcion">Pregunta</span>
+            <span class="opcion">Castigo</span>
+            <span class="opcion">Perder Tiempo</span>
+            <span class="opcion">Pregunta</span>
+
+        </div>
+
+
+    </div>
+
+    <!-- Contenedor central con la tarjeta de la pregunta -->
+    <main class="contenedor-juego oculto" id="pantallaPreguntas">
+        <div class="tarjeta-pregunta">
+            <h2 class="pregunta-titulo">¿Qué monstruo se transforma con la luna llena?</h2>
+            <div class="respuestas-grid">
+                <button class="btn-respuesta">Zombi</button>
+                <button class="btn-respuesta">Vampiro</button>
+                <button class="btn-respuesta">Hombre Lobo</button>
+                <button class="btn-respuesta">Fantasma</button>
+            </div>
+        </div>
+    </main>
+    
+</body>
+</html>
