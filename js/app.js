@@ -12,6 +12,7 @@ const iniciarJuego = () => {
     guardarGrupo();
     cambioRuleta();
     iniciarCronometro();
+    document.body.classList.add('fondo-juego');
 }
 
 const iniciarApp = () => {
