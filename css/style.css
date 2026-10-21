@@ -29,7 +29,7 @@ body {
 body.fondo-juego {
     background-color: #050505;
     background-image: 
-        radial-gradient(circle, rgba(42, 8, 8, 0.3) 0%, rgba(5, 5, 5, 0.9) 80%),
+        radial-gradient(circle, rgba(42, 8, 8, 0.3) 0%, rgba(5, 5, 5, 0.7) 80%),
         url('../imgs/fondo2.jfif'); /* Actualizado a fondo2.jfif */
     background-size: cover;
     background-position: center;
