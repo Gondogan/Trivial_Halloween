@@ -99,5 +99,66 @@
         </div>
     </main>
     
+<!-- ==========================================
+         PANTALLA DE GAME OVER (Derrota)
+    =========================================== -->
+    <section class="pantalla-game-over oculto" id="pantallaGameOver">
+        <div class="contenedor-terror">
+            <!-- Aquí ponéis vuestra imagen más terrorífica (un screamer, una calavera ensangrentada, etc.) -->
+            <img src="./imgs/gameover.png" alt="Monstruo Game Over" class="monstruo-animado">
+            
+            <h2 class="texto-sangriento">¡HABÉIS PERDIDO EL ALMA!</h2>
+            
+            <button class="btn-reiniciar" id="btnReiniciarJuego">Volver a intentar</button>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA DE RANKING (Victoria tras 5 aciertos)
+    =========================================== -->
+    <section class="pantalla-ranking oculto" id="pantallaRanking">
+        <div class="tarjeta-ranking">
+            <h2 class="titulo-ranking">🔥 SALÓN DE LA FAMA 🔥</h2>
+            <h3 class="subtitulo-victoria">¡Habéis sobrevivido a la noche!</h3>
+            
+            <!-- Resumen de la partida actual -->
+            <div class="marcador-actual">
+                <p>Grupo: <span id="rankingNombreGrupo" class="resaltado">Los Del Fondo</span></p>
+                <p>Tiempo de Escape: <span id="rankingTiempo" class="resaltado">02:45</span></p>
+            </div>
+
+            <!-- Tabla de los mejores tiempos -->
+            <div class="contenedor-tabla">
+                <table class="tabla-ranking">
+                    <thead>
+                        <tr>
+                            <th>Posición</th>
+                            <th>Grupo</th>
+                            <th>Tiempo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoRanking">
+                        <!-- Aquí se inyectarán las filas con JS desde el LocalStorage. 
+                             He dejado 2 de ejemplo para que veas el diseño -->
+                        <tr>
+                            <td>🥇 1º</td>
+                            <td>Los Cazafantasmas</td>
+                            <td>01:30</td>
+                        </tr>
+                        <tr>
+                            <td>🥈 2º</td>
+                            <td>Equipo Grito</td>
+                            <td>02:15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <button class="btn-reiniciar" id="btnJugarDeNuevo">NUEVA PARTIDA</button>
+        </div>
+    </section>
+
+
+
 </body>
 </html>

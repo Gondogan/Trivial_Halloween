@@ -154,7 +154,7 @@ button[type="submit"]:active, #empezar:active {
 /* =========================================
    5. ZONA CENTRAL Y RULETA HALLOWEEN
 ========================================= */
-.zona-juego-central {
+.contenedor-ruleta { 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -192,27 +192,27 @@ button[type="submit"]:active, #empezar:active {
     overflow: hidden;
     cursor: pointer;
     
-    /* Sombra luminiscente */
+    /* Sombra luminiscente por defecto */
     box-shadow: 
         0 0 30px rgba(153, 0, 255, 0.6), 
         0 0 60px rgba(0, 204, 0, 0.3),   
         inset 0 0 20px rgba(0, 0, 0, 0.8); 
     
-
     background: conic-gradient(
         from -22.5deg,
-        var(--color-pregunta) 0deg 45deg,          /* 1. Pregunta */
-        var(--color-castigo) 45deg 90deg,          /* 2. Castigo */
-        var(--color-pregunta) 90deg 135deg,        /* 3. Pregunta */
-        var(--color-gana-tiempo) 135deg 180deg,    /* 4. Ganar Tiempo */
-        var(--color-pregunta) 180deg 225deg,       /* 5. Pregunta */
-        var(--color-castigo) 225deg 270deg,        /* 6. Castigo */
-        var(--color-pregunta) 270deg 315deg,       /* 7. Pregunta */
-        var(--color-pierde-tiempo) 315deg 360deg   /* 8. Perder Tiempo */
+        var(--color-pregunta) 0deg 45deg,          
+        var(--color-castigo) 45deg 90deg,          
+        var(--color-pregunta) 90deg 135deg,        
+        var(--color-gana-tiempo) 135deg 180deg,    
+        var(--color-pregunta) 180deg 225deg,       
+        var(--color-castigo) 225deg 270deg,        
+        var(--color-pregunta) 270deg 315deg,       
+        var(--color-pierde-tiempo) 315deg 360deg   
     );
-    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); 
+    
+    /* Añadimos la transición del box-shadow para que el resplandor sea suave */
+    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99), box-shadow 0.3s ease; 
 }
-
 /* Líneas divisorias exactas */
 .linea { position: absolute; width: 3px; height: 100%; background-color: #1a0505; top: 50%; left: 50%; transform-origin: center; z-index: 1; }
 .linea:nth-child(1) { transform: translate(-50%, -50%) rotate(22.5deg); }
@@ -256,10 +256,43 @@ button[type="submit"]:active, #empezar:active {
 .opcion:nth-of-type(8) { --angulo: 315deg; }  /* 8. Perder Tiempo */
 
 /* =========================================
+   5.1 ESTADOS DE LA RULETA (ILUMINACIÓN)
+========================================= */
+/* Cuando el JS inyecte esta clase, el CSS sobreescribirá las variables y las sombras automáticamente */
+
+.resultado-pregunta { --color-pregunta: #a64dff; }
+.resultado-pregunta .ruleta { 
+    box-shadow: 0 0 80px rgba(166, 77, 255, 0.8), inset 0 0 20px rgba(0,0,0,0.8); 
+}
+
+.resultado-castigo { --color-castigo: #ff8c1a; }
+.resultado-castigo .ruleta { 
+    box-shadow: 0 0 80px rgba(255, 140, 26, 0.8), inset 0 0 20px rgba(0,0,0,0.8); 
+}
+
+.resultado-gana-tiempo { --color-gana-tiempo: #3ff23f; }
+.resultado-gana-tiempo .ruleta { 
+    box-shadow: 0 0 90px rgba(0, 255, 0, 1), inset 0 0 20px rgba(0, 0, 0, 0.8); 
+}
+
+.resultado-pierde-tiempo { --color-pierde-tiempo: #ff3333; }
+.resultado-pierde-tiempo .ruleta { 
+    box-shadow: 0 0 80px rgba(255, 51, 51, 0.8), inset 0 0 20px rgba(0,0,0,0.8); 
+}
+
+/* =========================================
    6. CONTROL SPA Y TARJETA PREGUNTA (ESTILO FANTASMA)
 ========================================= */
 .oculto { display: none !important; }
 .pantalla { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
+
+.contenedor-juego { 
+    display: flex; 
+    justify-content: center; 
+    width: 100%; 
+    margin-top: 20px;
+    z-index: 5;
+}
 
 .contenedor-tarjeta-estatica { display: flex; justify-content: center; width: 100%; }
 
