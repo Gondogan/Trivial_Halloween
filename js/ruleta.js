@@ -1,5 +1,19 @@
-window.addEventListener('DOMContentLoaded', () => {
+import { preguntas } from "../assets/data/questions.js";
+// Funcion para que no se repitan las preguntas
+let preguntasUsadas = [];
 
+function obtenerPreguntaNoRepetida() {
+  let disponibles = preguntas.filter(
+    pregunta => !preguntasUsadas.includes(pregunta.id)
+  );
+
+  if (disponibles.length === 0) {
+    preguntasUsadas = [];
+    disponibles = preguntas;
+  }
+
+  const indiceAleatorio = Math.floor(Math.random() * disponibles.length);
+  const preguntaElegida = disponibles[indiceAleatorio];
     const ruleta = document.getElementById('ruleta');
     // Atrapamos el nuevo contenedor que tiene las variables CSS
     const contenedorRuleta = document.querySelector('.contenedor-ruleta-juego');
@@ -16,11 +30,38 @@ window.addEventListener('DOMContentLoaded', () => {
         "Perder Tiempo"
     ];
 
-    let estadoRuleta = 'esperandoAlClic';
-    let rotacionActual = 0;
-    let opcionSeleccionada = 0;
-    let resultadoFinal = '';
+  preguntasUsadas.push(preguntaElegida.id);
 
+  return preguntaElegida;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+
+  // 1. Variables y elementos HTML
+  const ruleta = document.getElementById('ruleta');
+
+  const opciones = [
+    "Pregunta",
+    "Castigo",
+    "Ganar Tiempo",
+    "Pregunta",
+    "Pregunta",
+    "Castigo",
+    "Perder Tiempo",
+    "Pregunta"
+  ];
+
+  let estadoRuleta = 'esperandoAlClic';
+  let rotacionActual = 0;
+  let opcionSeleccionada = 0;
+  let resultadoFinal = '';
+
+  // 2. Evento que hace girar la ruleta
+  ruleta.addEventListener('click', () => {
+
+    if (estadoRuleta === 'girando') {
+      return;
+    }
     ruleta.addEventListener('click', () => {
         if (estadoRuleta === 'girando') return;
         estadoRuleta = 'girando';
@@ -35,7 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
         contenedorRuleta.style.setProperty('--color-pierde-tiempo', '#b71c1c');
         ruleta.style.boxShadow = '0 0 30px rgba(153, 0, 255, 0.6), 0 0 60px rgba(0, 204, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.8)';
 
-        opcionSeleccionada = Math.floor(Math.random() * opciones.length);
+    estadoRuleta = 'girando';
 
         const gradosPorOpcion = 360 / opciones.length;
         const posicionActual = rotacionActual % 360;
