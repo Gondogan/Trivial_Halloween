@@ -393,10 +393,48 @@ button[type="submit"]:active, #empezar:active {
     display: none !important;
 }
 
+/* =========================================
+   7. PANTALLA DE GAME OVER
+========================================= */
+.pantalla-game-over { width: 100vw; height: 100vh; background: radial-gradient(circle, rgba(40, 0, 0, 0.8) 0%, rgba(0, 0, 0, 1) 70%); display: flex; align-items: center; justify-content: center; text-align: center; position: fixed; top: 0; left: 0; z-index: 1000; }
+.contenedor-terror { display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 10; }
+.texto-sangriento { font-family: 'Creepster', cursive; font-size: 5rem; color: #df1919; text-shadow: 4px 4px 0px #000, 0 0 25px #ff0000, 0 0 50px #8b0000; letter-spacing: 3px; animation: parpadeoSangre 3s infinite; margin-bottom: -5px; }
+.subtexto-muerte { font-size: 1.5rem; color: #888; text-shadow: 1px 1px 5px #000; animation: aparecerLento 4s forwards; opacity: 0; margin-bottom: 20px; }
+.monstruo-animado { width: 90vw; max-width: 750px; height: auto; border-radius: 12px; filter: drop-shadow(0 0 40px #ff0000) brightness(0.8); animation: acercamientoTerror 4s ease-out forwards, latidoMaligno 0.8s infinite alternate; }
+
+.btn-gameover { background-color: #330000; color: #ff9999; font-family: 'Special Elite', monospace; font-size: 1.5rem; padding: 15px 40px; border: 2px solid #660000; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-shadow: 2px 2px 4px #000; margin-top: 10px; box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); animation: aparecerDeGolpe 5s forwards; opacity: 0; }
+.btn-gameover:hover { background-color: #8b0000; color: #ffffff; border-color: #ff0000; box-shadow: 0 0 30px #ff0000, inset 0 0 15px #000; transform: scale(1.05); }
+.btn-gameover:active { transform: scale(0.95); }
 
 /* =========================================
-   8. ANIMACIONES
+   8. PANTALLA DE RANKING (VICTORIA)
+========================================= */
+.pantalla-ranking { width: 100vw; height: 100vh; background: transparent; backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; z-index: 1000; }
+.tarjeta-ranking { background: linear-gradient(135deg, rgba(30, 8, 8, 0.95) 0%, rgba(10, 0, 0, 0.98) 100%); border: 4px ridge #ff6600; border-radius: 15px; padding: 40px; width: 95%; max-width: 700px; box-shadow: 0 0 45px rgba(255, 102, 0, 0.6), inset 0 0 40px #000; text-align: center; display: flex; flex-direction: column; gap: 25px; animation: flotarRanking 4s ease-in-out infinite; }
+.titulo-ranking { font-family: 'Creepster', cursive; font-size: 3.5rem; color: #ff9900; text-shadow: 0 0 15px #ff0000, 3px 3px 5px #000; letter-spacing: 2px; }
+.subtitulo-victoria { font-family: 'Special Elite', monospace; color: #00ff15; font-size: 1.5rem; text-shadow: 0 0 10px #a300cc, 2px 2px 4px #000; }
+.marcador-actual { background: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 8px; border: 2px dashed #ff9900; font-size: 1.3rem; color: #fff; display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 20px; box-shadow: inset 0 0 15px rgba(255, 102, 0, 0.2); }
+.marcador-actual p { margin: 0; }
+.resaltado { color: #ffcc80; font-weight: bold; text-shadow: 0 0 8px #ff9900; font-size: 1.5rem; margin-left: 10px; }
+.contenedor-tabla { margin-top: 10px; overflow: hidden; border-radius: 8px; border: 2px solid #4a0404; box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); background-color: rgba(10, 0, 0, 0.7); }
+.tabla-ranking { width: 100%; border-collapse: collapse; }
+.tabla-ranking th { background-color: #330000; color: #ff3333; padding: 18px; font-size: 1.2rem; border-bottom: 3px solid #ff0000; text-transform: uppercase; letter-spacing: 1px; }
+.tabla-ranking td { color: #d3d3d3; padding: 15px; font-size: 1.1rem; border-bottom: 1px solid #330000; transition: background-color 0.3s ease; }
+.tabla-ranking tr:hover td { background-color: rgba(255, 0, 0, 0.15); }
+.tabla-ranking tr:nth-child(1) td { color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); font-size: 1.3rem; font-weight: bold; background-color: rgba(255, 215, 0, 0.1); }
+
+.btn-ranking { background-color: #5c0000; color: #fff; font-family: 'Special Elite', monospace; font-size: 1.3rem; padding: 15px 30px; border: 1px solid #2e0000; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-shadow: 2px 2px 4px #000; align-self: center; margin-top: 20px; box-shadow: 3px 3px 10px rgba(0,0,0,0.5); }
+.btn-ranking:hover { background-color: #8b0000; border-color: #ff0000; box-shadow: 0 0 20px #ff0000; transform: scale(1.05); }
+
+/* =========================================
+   9. ANIMACIONES GLOBALES
 ========================================= */
 @keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px) rotate(5deg); } }
+@keyframes flotarRanking { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @keyframes girarReloj { 0% { transform: rotate(0deg); } 45%, 55% { transform: rotate(180deg); } 100% { transform: rotate(360deg); } }
 @keyframes latirCalavera { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 5px #ff0000); } }
+@keyframes acercamientoTerror { 0% { transform: scale(0.7) translateY(30px); opacity: 0; filter: blur(5px); } 100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0px); } }
+@keyframes latidoMaligno { 0% { filter: drop-shadow(0 0 20px #ff0000) brightness(0.8); } 100% { filter: drop-shadow(0 0 60px #ff0000) brightness(1.1); } }
+@keyframes parpadeoSangre { 0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 4px 4px 0px #000, 0 0 25px #ff0000, 0 0 50px #8b0000; } 20%, 22%, 24%, 55% { opacity: 0.4; text-shadow: none; } }
+@keyframes aparecerLento { 0%, 50% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes aparecerDeGolpe { 0%, 80% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
