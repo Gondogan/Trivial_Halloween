@@ -8,18 +8,10 @@
 }
 
 body {
+    
+    /* FONDO POR DEFECTO (LOGIN) */
     background-color: #050505;
-    background-image: 
-        /* 1. Capa superior: El degradado oscuro semitransparente (ajusta el 0.85 para más o menos oscuridad) */
-        radial-gradient(circle, rgba(42, 8, 8, 0.5) 0%, rgba(5, 5, 5, 0.9) 80%),
-        /* 2. Capa inferior: Tu imagen */
-        url(../imgs/fondo1.jfif);
-    
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    
+    background-image: radial-gradient(circle, #2a0808 0%, #050505 80%);
     color: #d3d3d3;
     font-family: 'Special Elite', monospace, sans-serif;
     min-height: 100vh;
@@ -29,34 +21,24 @@ body {
     justify-content: flex-start;
     padding: 20px;
     overflow-x: hidden;
+    
+    transition: background-image 1s ease, background-color 1s ease;
 }
 
-/* body {
+/* ESTA CLASE SE INYECTA CON JS AL EMPEZAR A JUGAR */
+body.fondo-juego {
     background-color: #050505;
     background-image: 
-         1. Capa superior: El degradado oscuro semitransparente (ajusta el 0.85 para más o menos oscuridad) 
-        radial-gradient(circle, rgba(42, 8, 8, 0.5) 0%, rgba(5, 5, 5, 0.9) 80%),
-        2. Capa inferior: Tu imagen 
-        url(../imgs/fondo1.jfif);
-    
+        radial-gradient(circle, rgba(42, 8, 8, 0.3) 0%, rgba(5, 5, 5, 0.7) 80%),
+        url('../imgs/fondo2.jfif'); /* Actualizado a fondo2.jfif */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    
-    color: #d3d3d3;
-    font-family: 'Special Elite', monospace, sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 20px;
-    overflow-x: hidden; */
-
+}
 
 /* =========================================
-   2. TÍTULOS (Sombra blanca definida y Título Gigante)
+   2. TÍTULOS 
 ========================================= */
 header {
     margin-top: 30px; 
@@ -66,22 +48,13 @@ header {
 header h1, .pregunta-titulo {
     font-family: 'Creepster', cursive;
     color: #8b0000;
-    text-shadow: 
-        2px 2px 3px #000,    
-        0 0 4px #ffffff,     
-        0 0 8px #ffffff;     
+    text-shadow: 2px 2px 3px #000, 0 0 4px #ffffff, 0 0 8px #ffffff;     
     letter-spacing: 3px;
     text-align: center;
 }
 
-header h1 {
-    font-size: 4.8rem; 
-}
-
-.pregunta-titulo {
-    font-size: 2.6rem; 
-    margin-bottom: 40px;
-}
+header h1 { font-size: 4.8rem; }
+.pregunta-titulo { font-size: 2.6rem; margin-bottom: 40px; }
 
 /* =========================================
    3. PANTALLA 1: FORMULARIO DE LOGIN
@@ -166,191 +139,222 @@ button[type="submit"]:active, #empezar:active {
 }
 
 /* =========================================
-   4. PANELES LATERALES (Izquierdo y Derecho)
+   4. PANELES LATERALES
 ========================================= */
+.panel-izquierdo { position: absolute; top: 60px; left: 80px; display: flex; align-items: center; z-index: 10; }
+.panel-derecho { position: absolute; top: 60px; right: 70px; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 10; }
+.nombre-grupo { color: #ffcc80; font-family: 'Special Elite', monospace; font-size: 1.4rem; text-shadow: 0 0 8px #ff9900; letter-spacing: 2px; }
+.contenedor-vidas { display: grid; grid-template-columns: repeat(1, 1fr); gap: 8px; font-size: 2.3rem; }
+.calabaza { transition: all 0.5s ease; filter: drop-shadow(0 0 10px #ff6600); }
+.calabaza.inactiva { filter: grayscale(100%) brightness(30%); opacity: 0.5; transform: scale(0.85); }
+.contenedor-tiempo { display: flex; align-items: center; gap: 12px; font-family: 'Creepster', cursive; font-size: 2.2rem; color: #ff3333; text-shadow: 0 0 8px #ff0000; background: rgba(20, 5, 5, 0.8); padding: 8px 20px; border-radius: 8px; border: 2px dashed #6b2424; box-shadow: 0 0 15px rgba(139, 0, 0, 0.5); }
+.reloj-arena { font-size: 1.8rem; animation: girarReloj 4s infinite ease-in-out; }
+.calavera { font-size: 1.8rem; animation: latirCalavera 2s infinite ease-in-out; }
 
-/* Panel del tiempo a la izquierda */
-.panel-izquierdo {
-    position: absolute;
-    top: 60px;
-    left: 80px; 
-    display: flex;
-    align-items: center;
-}
-
-/* Panel del grupo y vidas a la derecha */
-.panel-derecho {
-    position: absolute;
-    top: 60px; 
-    right: 70px; 
+/* =========================================
+   5. ZONA CENTRAL Y RULETA HALLOWEEN
+========================================= */
+.zona-juego-central {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 60px; 
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 100%;
+    z-index: 1;
 }
 
-/* Estilo del nombre del grupo */
-.nombre-grupo {
-    color: #ffcc80;
-    font-family: 'Special Elite', monospace;
-    font-size: 1.4rem;
-    text-shadow: 0 0 8px #ff9900;
-    letter-spacing: 2px;
-}
+.contenedor-ruleta-juego {
+    --tamano-ruleta: 350px;
+    
+    /* Variables de colores de Halloween */
+    --color-pregunta: #4a148c;      /* Morado oscuro */
+    --color-castigo: #e65100;       /* Naranja calabaza */
+    --color-gana-tiempo: #00c853;   /* Verde poción */
+    --color-pierde-tiempo: #b71c1c; /* Rojo sangre */
 
-/* Vidas (Calabazas - 3 arriba, 3 abajo) */
-.contenedor-vidas {
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 8px; 
-    font-size: 2.3rem; 
-}
-
-.calabaza {
-    transition: all 0.5s ease;
-    filter: drop-shadow(0 0 10px #ff6600); 
-}
-
-.calabaza.inactiva {
-    filter: grayscale(100%) brightness(30%);
-    opacity: 0.5;
-    transform: scale(0.85);
-}
-
-/* Temporizador con estética de Halloween */
-.contenedor-tiempo {
+    position: relative; /* ¡Ancla vital para el puntero! */
+    width: var(--tamano-ruleta);
+    height: var(--tamano-ruleta);
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 12px;
-    font-family: 'Creepster', cursive;
-    font-size: 2.2rem;
-    color: #ff3333;
-    text-shadow: 0 0 8px #ff0000;
-    background: rgba(20, 5, 5, 0.8);
-    padding: 8px 20px;
-    border-radius: 8px;
-    border: 2px dashed #6b2424;
-    box-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
 }
 
-.reloj-arena {
-    font-size: 1.8rem;
-    animation: girarReloj 4s infinite ease-in-out; 
+.ruleta {
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 5px solid #1a0505;
+    box-sizing: border-box;
+    overflow: hidden;
+    cursor: pointer;
+    
+    /* Sombra luminiscente */
+    box-shadow: 
+        0 0 30px rgba(153, 0, 255, 0.6), 
+        0 0 60px rgba(0, 204, 0, 0.3),   
+        inset 0 0 20px rgba(0, 0, 0, 0.8); 
+    
+
+    background: conic-gradient(
+        from -22.5deg,
+        var(--color-pregunta) 0deg 45deg,          /* 1. Pregunta */
+        var(--color-castigo) 45deg 90deg,          /* 2. Castigo */
+        var(--color-pregunta) 90deg 135deg,        /* 3. Pregunta */
+        var(--color-gana-tiempo) 135deg 180deg,    /* 4. Ganar Tiempo */
+        var(--color-pregunta) 180deg 225deg,       /* 5. Pregunta */
+        var(--color-castigo) 225deg 270deg,        /* 6. Castigo */
+        var(--color-pregunta) 270deg 315deg,       /* 7. Pregunta */
+        var(--color-pierde-tiempo) 315deg 360deg   /* 8. Perder Tiempo */
+    );
+    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); 
 }
 
-.calavera {
-    font-size: 1.8rem;
-    animation: latirCalavera 2s infinite ease-in-out; 
+/* Líneas divisorias exactas */
+.linea { position: absolute; width: 3px; height: 100%; background-color: #1a0505; top: 50%; left: 50%; transform-origin: center; z-index: 1; }
+.linea:nth-child(1) { transform: translate(-50%, -50%) rotate(22.5deg); }
+.linea:nth-child(2) { transform: translate(-50%, -50%) rotate(67.5deg); }
+.linea:nth-child(3) { transform: translate(-50%, -50%) rotate(112.5deg); }
+.linea:nth-child(4) { transform: translate(-50%, -50%) rotate(157.5deg); }
+
+/* El puntero rojo sangre anclado arriba */
+.puntero { 
+    position: absolute; 
+    top: -20px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 10; 
+    width: 0; 
+    height: 0; 
+    border-left: 18px solid transparent; 
+    border-right: 18px solid transparent; 
+    border-top: 35px solid #8b0000; 
+    filter: drop-shadow(0 -2px 8px rgba(255, 0, 0, 0.8)); 
 }
+
+/* Textos de la ruleta */
+.opcion { 
+    position: absolute; top: 50%; left: 50%; 
+    font-family: 'Special Elite', monospace, sans-serif; 
+    font-size: 13px; font-weight: bold; letter-spacing: 1px; color: #f5f5f5; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), -1px -1px 2px rgba(0,0,0,0.8); 
+    white-space: nowrap; z-index: 2; 
+    transform: translate(-50%, -50%) rotate(var(--angulo)) translateY(-130px); 
+}
+
+/* Usamos nth-of-type porque cuenta específicamente las etiquetas <span> (las opciones) ignorando los <div> de las líneas */
+.opcion:nth-of-type(1) { --angulo: 0deg; }    /* 1. Pregunta */
+.opcion:nth-of-type(2) { --angulo: 45deg; }   /* 2. Castigo */
+.opcion:nth-of-type(3) { --angulo: 90deg; }   /* 3. Pregunta */
+.opcion:nth-of-type(4) { --angulo: 135deg; }  /* 4. Ganar Tiempo */
+.opcion:nth-of-type(5) { --angulo: 180deg; }  /* 5. Pregunta */
+.opcion:nth-of-type(6) { --angulo: 225deg; }  /* 6. Castigo */
+.opcion:nth-of-type(7) { --angulo: 270deg; }  /* 7. Pregunta */
+.opcion:nth-of-type(8) { --angulo: 315deg; }  /* 8. Perder Tiempo */
 
 /* =========================================
-   5. TARJETA DE JUEGO
+   6. CONTROL SPA Y TARJETA PREGUNTA (ESTILO FANTASMA)
 ========================================= */
-.contenedor-juego {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    width: 100%;
-}
+.oculto { display: none !important; }
+.pantalla { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
 
-.tarjeta-pregunta {
-    background: linear-gradient(135deg, #1a0b0b 0%, #0a0000 100%);
-    border: 3px solid #4a1515;
-    border-radius: 2px 25px 3px 30px; 
+.contenedor-tarjeta-estatica { display: flex; justify-content: center; width: 100%; }
+
+.tarjeta-pregunta { 
+    /* Estilo Fantasma Translúcido Luminoso */
+    background: linear-gradient(135deg, rgba(235, 235, 245, 0.92) 0%, rgba(195, 195, 200, 0.88) 100%);
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(150, 160, 190, 0.6); 
+    border-radius: 4px 30px 4px 30px; 
     padding: 60px 50px; 
     width: 95%;
     max-width: 850px; 
     text-align: center;
-    box-shadow: 0 0 40px rgba(204, 0, 0, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.9);
-    position: relative;
+    /* Sombra etérea plateada/azulada para que flote sobre la ruleta oscura */
+    box-shadow: 0 0 35px rgba(200, 220, 255, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.5); 
+    position: relative; 
 }
 
-/* Telarañas */
-.tarjeta-pregunta::before {
-    content: "🕸️";
-    position: absolute;
-    top: 5px;
-    left: 10px;
-    font-size: 4rem; 
-    opacity: 0.3;
-    transform: rotate(-45deg);
+/* Título de la pregunta adaptado para destacar sobre el fondo claro del fantasma */
+.tarjeta-pregunta .pregunta-titulo {
+    color: #1a052e; /* Tono morado muy oscuro y elegante */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
-.tarjeta-pregunta::after {
-    content: "🕸️";
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
-    font-size: 4rem;
-    opacity: 0.3;
+/* Telarañas oscuras (negras) para hacer contraste con el fantasma */
+.tarjeta-pregunta::before { 
+    content: "🕸️"; 
+    position: absolute; 
+    top: 8px; 
+    left: 12px; 
+    font-size: 3.5rem; 
+    opacity: 0.6; 
+    filter: brightness(0%); /* Vuelve la telaraña completamente negra */
+    transform: rotate(-45deg); 
 }
 
-/* Cuadrícula de respuestas */
-.respuestas-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.tarjeta-pregunta::after { 
+    content: "🕸️"; 
+    position: absolute; 
+    bottom: 8px; 
+    right: 12px; 
+    font-size: 3.5rem; 
+    opacity: 0.6;
+    filter: brightness(0%); /* Negra */
+}
+
+.respuestas-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
     gap: 25px; 
-    position: relative;
+    position: relative; 
+    margin-top: 20px;
 }
 
-/* Fantasma animado */
-.respuestas-grid::before {
-    content: "👻";
-    position: absolute;
-    top: -60px;
-    right: -20px;
-    font-size: 3rem;
-    opacity: 0.7;
-    animation: flotar 3s ease-in-out infinite;
-    z-index: 10;
-    pointer-events: none;
+.respuestas-grid::before { 
+    content: "👻"; 
+    position: absolute; 
+    top: -65px; 
+    right: -20px; 
+    font-size: 3rem; 
+    opacity: 0.85; 
+    animation: flotar 3s ease-in-out infinite; 
+    z-index: 10; 
+    pointer-events: none; 
 }
 
-/* Botones de respuesta base */
-.btn-respuesta {
-    margin-top: 0;
-    background-color: #140505;
-    color: #d3d3d3;
-    border: 2px dashed #6b2424; 
+/* =========================================
+   7. BOTONES DE RESPUESTA (Tirando a negro)
+========================================= */
+.btn-respuesta { 
+    margin-top: 0; 
+    background-color: #1f1f23; /* Negro negrísimo tétrico */
+    color: #e0e0e0; /* Texto gris claro muy legible */
+    border: 2px dashed #8b8b8b; 
     padding: 25px; 
     font-size: 1.3rem; 
-    font-family: 'Special Elite', monospace;
+    font-family: 'Special Elite', monospace; 
     border-radius: 4px 15px 4px 15px; 
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6); 
 }
 
-/* Base del hover */
-.btn-respuesta:hover {
-    background-color: #3d0d0d;
-    color: #fff;
-    border-style: solid;
+.btn-respuesta:hover { 
+    background-color: #1a0f0f; 
+    color: #ffffff; 
+    border-style: solid; 
     transform: translateY(-3px) rotate(1deg); 
 }
 
-/* Hovers de colores */
-.btn-respuesta:nth-child(1):hover {
-    border-color: #ff6600;
-    box-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
-}
-
-.btn-respuesta:nth-child(2):hover {
-    border-color: #9900ff;
-    box-shadow: 0 0 15px rgba(153, 0, 255, 0.6);
-}
-
-.btn-respuesta:nth-child(3):hover {
-    border-color: #00cc00;
-    box-shadow: 0 0 15px rgba(0, 204, 0, 0.6);
-}
-
-.btn-respuesta:nth-child(4):hover {
-    border-color: #ff0000;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-}
+/* Efectos al pasar el ratón por los botones (respetando la gama temática) */
+.btn-respuesta:nth-child(1):hover { border-color: #ff6600; box-shadow: 0 0 15px rgba(255, 102, 0, 0.7); }
+.btn-respuesta:nth-child(2):hover { border-color: #9900ff; box-shadow: 0 0 15px rgba(153, 0, 255, 0.7); }
+.btn-respuesta:nth-child(3):hover { border-color: #00cc00; box-shadow: 0 0 15px rgba(0, 204, 0, 0.7); }
+.btn-respuesta:nth-child(4):hover { border-color: #ff0000; box-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
 
 .oculto {
     display: none !important;
@@ -358,20 +362,8 @@ button[type="submit"]:active, #empezar:active {
 
 
 /* =========================================
-   6. ANIMACIONES
+   8. ANIMACIONES
 ========================================= */
-@keyframes flotar {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px) rotate(5deg); }
-}
-
-@keyframes girarReloj {
-    0% { transform: rotate(0deg); }
-    45%, 55% { transform: rotate(180deg); } 
-    100% { transform: rotate(360deg); }     
-}
-
-@keyframes latirCalavera {
-    0%, 100% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 5px #ff0000); }
-}
+@keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px) rotate(5deg); } }
+@keyframes girarReloj { 0% { transform: rotate(0deg); } 45%, 55% { transform: rotate(180deg); } 100% { transform: rotate(360deg); } }
+@keyframes latirCalavera { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 5px #ff0000); } }
