@@ -2,46 +2,8 @@
  * ARCHIVO PARA GESTION DE DATOS, GRUPOS Y ESTADOS
  */
 
-import { infoGrupos } from "../assets/data/usuarios.js";
 import { divIntegrantes } from "./ui.js";
 import { grupo } from "./ui.js";
-
-export const guardarGrupo = () => {
-    let integrantes = [];
-    const inputs = divIntegrantes.querySelectorAll('input');
-    for (const input of inputs) {
-        integrantes.push(input.value.trim());
-    }
-
-    let nuevoGrupo = {
-        equipo: grupo.value.trim(),
-        integrantes: integrantes,
-        calabazas: 0,
-        preguntasUsadas: 0,
-        tiempoFinal: 0
-    }
-    infoGrupos.push(nuevoGrupo);
-    console.log(infoGrupos);
-}
-
-export const sumarCalabaza = () => {
-    estado.calabazas += 1;
-    if(estado.calabazas === 5) {
-        // Detener cronometro y cambiar a la pantalla final
-        // Guardar el tiempo final en el objeto
-    }
-}
-
-export const quitarCalabaza = () => {
-    estado.calabazas -= 1;
-    if(estado.calabazas < 0){
-        // estado.calabazas = 0;
-    }
-}
-
-export const pintarEquipoLateral = () => {
-    
-}
 
 let intervaloCronometro = null;
 let segundosTranscurridos = 0;
@@ -65,14 +27,92 @@ export const iniciarCronometro = () => {
         tiempoTexto.textContent = `${minutos}:${segundosFormateados}`;
         
     }, 1000);
-};
+}
 
 export const pararCronometro = () => {
 
     clearInterval(intervaloCronometro);
     
     return segundosTranscurridos;
-};
+}
+
+export const obtenerGrupos = () => {
+
+    const gruposGuardados = localStorage.getItem('trivial_grupos');
+
+    if(!gruposGuardados){
+        return [];
+    }
+
+    return JSON.parse(gruposGuardados);
+}
+
+export const guardarGrupo = () => {
+
+    const grupos = obtenerGrupos();
+    let integrantes = [];
+
+    const inputs = divIntegrantes.querySelectorAll('input');
+
+    for (const input of inputs) {
+        integrantes.push(input.value.trim());
+    }
+
+    let equipoActual = {
+        equipo: grupo.value.trim(),
+        integrantes: integrantes,
+        calabazas: 0,
+        preguntasUsadas: 0,
+        tiempoFinal: 0
+    }
+    
+    grupos.push(equipoActual)
+    
+    console.log(grupos);
+    return equipoActual
+}
+
+export const sumarCalabaza = (nombreGrupo) => {
+    
+    const grupos = obtenerGrupos();
+
+    const indice = grupos.findIndex(grupo => grupo.equipo === nombreEquipo);
+
+    if(indice !== -1){
+        grupos[indice].calabazas += 1;
+
+        if(grupos[indice].calabazas === 5){
+            const tiempoTotal = pararCronometro();
+
+            grupos[indice].tiempoFinal = tiempoTotal;
+
+            // LLamar a la funcion que muestra pantalla game over
+        }
+
+        localStorage.setItem('trivial_grupos', JSON.stringify(grupos));
+    }
+}
+
+export const quitarCalabaza = (nombreEquipo) => {
+    const grupos = obtenerGrupos();
+    const indice = grupos.findIndex(grupo => grupo.equipo === nombreEquipo);
+
+    if(indice !== -1){
+        grupos[indice].calabazas -= 1;
+        
+        if(grupos[indice].calabazas < 0){
+            grupos[indice].calabazas = 0;
+        }
+
+        localStorage.setItem('trivial-grupos', JSON.stringify(grupos));
+    }
+}
+
+export const pintarEquipoLateral = () => {
+    
+}
+
+
 
 export const pintarPuntuacion = () => {
     
