@@ -1,6 +1,6 @@
 /**
  * ARCHIVO PARA FUNCIONES RELACIONADAS CON LA UI ( Manipulacion del DOM y validaciones HTML)
- */
+*/
 
 export const seleccionIntegrantes = document.getElementById('numero-integrantes');
 export const divIntegrantes = document.getElementById('contenedor-integrantes');

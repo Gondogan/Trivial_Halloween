@@ -1,10 +1,12 @@
 import { preguntas } from "../assets/data/questions.js";
-// Funcion para que no se repitan las preguntas
+import { quitarCalabaza, sumarCalabaza, getEquipoActual, sumarTiempo, restarTiempo } from "./state.js";
+
 let preguntasUsadas = [];
+let respuestaCorrectaActual = "";
 
 function obtenerPreguntaNoRepetida() {
   let disponibles = preguntas.filter(
-    pregunta => !preguntasUsadas.includes(pregunta.id)
+    (pregunta) => !preguntasUsadas.includes(pregunta.id),
   );
 
   if (disponibles.length === 0) {
@@ -14,129 +16,152 @@ function obtenerPreguntaNoRepetida() {
 
   const indiceAleatorio = Math.floor(Math.random() * disponibles.length);
   const preguntaElegida = disponibles[indiceAleatorio];
-    const ruleta = document.getElementById('ruleta');
-    // Atrapamos el nuevo contenedor que tiene las variables CSS
-    const contenedorRuleta = document.querySelector('.contenedor-ruleta-juego');
-    const pantallaPreguntas = document.getElementById('pantallaPreguntas');
-
-    const opciones = [
-        "Pregunta",
-        "Castigo",
-        "Pregunta",
-        "Ganar Tiempo",
-        "Pregunta",
-        "Castigo",
-        "Pregunta",
-        "Perder Tiempo"
-    ];
-
   preguntasUsadas.push(preguntaElegida.id);
-
+  console.log(preguntasUsadas);
   return preguntaElegida;
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("DOMContentLoaded", () => {
 
-  // 1. Variables y elementos HTML
-  const ruleta = document.getElementById('ruleta');
+  const ruleta = document.getElementById("ruleta");
+  const contenedorRuleta = document.querySelector(".contenedor-ruleta-juego");
+  const pantallaPreguntas = document.getElementById("pantallaPreguntas");
+  const tituloPregunta = document.querySelector(".pregunta-titulo");
+  const botonesRespuesta = document.querySelectorAll(".btn-respuesta");
 
   const opciones = [
     "Pregunta",
     "Castigo",
+    "Pregunta",
     "Ganar Tiempo",
     "Pregunta",
-    "Pregunta",
     "Castigo",
+    "Pregunta",
     "Perder Tiempo",
-    "Pregunta"
   ];
 
-  let estadoRuleta = 'esperandoAlClic';
+  let estadoRuleta = "esperandoAlClic";
   let rotacionActual = 0;
   let opcionSeleccionada = 0;
-  let resultadoFinal = '';
+  let resultadoFinal = "";
 
-  // 2. Evento que hace girar la ruleta
-  ruleta.addEventListener('click', () => {
+  ruleta.addEventListener("click", () => {
+    if (estadoRuleta !== "esperandoAlClic") return;
+    estadoRuleta = "girando";
 
-    if (estadoRuleta === 'girando') {
-      return;
-    }
-    ruleta.addEventListener('click', () => {
-        if (estadoRuleta === 'girando') return;
-        estadoRuleta = 'girando';
-        
-        // Ocultamos la tarjeta si estaba visible
-        pantallaPreguntas.classList.add('oculto');
+    pantallaPreguntas.classList.add("oculto");
 
-        // Reseteamos los colores de las variables CSS a su estado original
-        contenedorRuleta.style.setProperty('--color-pregunta', '#4a148c');
-        contenedorRuleta.style.setProperty('--color-castigo', '#e65100');
-        contenedorRuleta.style.setProperty('--color-gana-tiempo', '#00c853');
-        contenedorRuleta.style.setProperty('--color-pierde-tiempo', '#b71c1c');
-        ruleta.style.boxShadow = '0 0 30px rgba(153, 0, 255, 0.6), 0 0 60px rgba(0, 204, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.8)';
+    // LIMPIEZA PROFESIONAL: Quitamos cualquier clase de estado anterior para apagar las luces
+    contenedorRuleta.classList.remove(
+      "resultado-pregunta",
+      "resultado-castigo",
+      "resultado-gana-tiempo",
+      "resultado-pierde-tiempo",
+    );
 
-    estadoRuleta = 'girando';
+    opcionSeleccionada = Math.floor(Math.random() * opciones.length);
+    const gradosPorOpcion = 360 / opciones.length;
+    const posicionActual = rotacionActual % 360;
+    const anguloDestino = (360 - opcionSeleccionada * gradosPorOpcion) % 360;
+    const ajuste = (anguloDestino - posicionActual + 360) % 360;
 
-        const gradosPorOpcion = 360 / opciones.length;
-        const posicionActual = rotacionActual % 360;
-        const anguloDestino = (360 - opcionSeleccionada * gradosPorOpcion) % 360;
-        const vueltas = 5 * 360;
-        const ajuste = (anguloDestino - posicionActual + 360) % 360;
+    rotacionActual += 5 * 360 + ajuste;
+    ruleta.style.transform = `rotate(${rotacionActual}deg)`;
+  });
 
-        rotacionActual += vueltas + ajuste;
-        ruleta.style.transform = `rotate(${rotacionActual}deg)`;
-    });
+  ruleta.addEventListener("transitionend", (evento) => {
+    if (evento.target !== ruleta) return;
+    if (evento.propertyName !== "transform") return;
+    if (estadoRuleta !== "girando") return;
 
-    ruleta.addEventListener('transitionend', (evento) => {
-        if (evento.propertyName !== 'transform') return;
-        if (estadoRuleta !== 'girando') return;
+    estadoRuleta = "resultado";
+    resultadoFinal = opciones[opcionSeleccionada];
 
-        estadoRuleta = 'resultado';
-        resultadoFinal = opciones[opcionSeleccionada];
-        gestionarResultado(resultadoFinal);
-    });
+    gestionarResultado(resultadoFinal);
+  });
 
-    function gestionarResultado(resultadoFinal) {
-        switch (resultadoFinal) {
-            case 'Pregunta':
-                console.log('Ha salido una pregunta');
-                // Iluminamos el color morado manipulando el CSS
-                contenedorRuleta.style.setProperty('--color-pregunta', '#a64dff'); 
-                ruleta.style.boxShadow = '0 0 80px rgba(166, 77, 255, 0.8), inset 0 0 20px rgba(0,0,0,0.8)';
-                
-                // Mostramos la tarjeta fantasma
-                setTimeout(() => {
-                    pantallaPreguntas.classList.remove('oculto');
-                    estadoRuleta = 'esperandoAlClic'; 
-                }, 600);
-                break;
+  function gestionarResultado(resultadoFinal) {
+    switch (resultadoFinal) {
+      case "Pregunta":
+        contenedorRuleta.classList.add("resultado-pregunta");
 
-            case 'Castigo':
-                console.log('Ha salido un castigo');
-                contenedorRuleta.style.setProperty('--color-castigo', '#ff8c1a');
-                ruleta.style.boxShadow = '0 0 80px rgba(255, 140, 26, 0.8), inset 0 0 20px rgba(0,0,0,0.8)';
-                setTimeout(() => estadoRuleta = 'esperandoAlClic', 1000);
-                break;
+        const nuevaPregunta = obtenerPreguntaNoRepetida();
 
-            case 'Ganar Tiempo':
-                console.log('Se gana tiempo');
-                contenedorRuleta.style.setProperty('--color-gana-tiempo', '#00ff66');
-                ruleta.style.boxShadow = '0 0 80px rgba(0, 255, 102, 0.8), inset 0 0 20px rgba(0,0,0,0.8)';
-                setTimeout(() => estadoRuleta = 'esperandoAlClic', 1000);
-                break;
-
-            case 'Perder Tiempo':
-                console.log('Se pierde tiempo');
-                contenedorRuleta.style.setProperty('--color-pierde-tiempo', '#ff3333');
-                ruleta.style.boxShadow = '0 0 80px rgba(255, 51, 51, 0.8), inset 0 0 20px rgba(0,0,0,0.8)';
-                setTimeout(() => estadoRuleta = 'esperandoAlClic', 1000);
-                break;
-
-            default:
-                console.log('Resultado no reconocido');
-                estadoRuleta = 'esperandoAlClic';
-                break;
+        if (typeof nuevaPregunta.correcta === "number") {
+          respuestaCorrectaActual = nuevaPregunta.opciones[nuevaPregunta.correcta].toString().trim();
+        } else {
+          respuestaCorrectaActual = nuevaPregunta.correcta.toString().trim();
         }
+
+        tituloPregunta.textContent = nuevaPregunta.pregunta;
+        botonesRespuesta.forEach((boton, index) => {
+          boton.textContent = nuevaPregunta.opciones[index];
+        });
+
+        setTimeout(() => {
+          contenedorRuleta.classList.add("oculto");
+          pantallaPreguntas.classList.remove("oculto");
+          estadoRuleta = "esperandoAlClic";
+          pantallaPreguntas.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }, 2000);
+        break;
+
+      case "Castigo":
+        contenedorRuleta.classList.add("resultado-castigo");
+        quitarCalabaza(getEquipoActual()?.equipo);
+        setTimeout(() => (estadoRuleta = "esperandoAlClic"), 1000);
+        break;
+
+      case "Ganar Tiempo":
+        contenedorRuleta.classList.add("resultado-gana-tiempo");
+        restarTiempo(30);
+        setTimeout(() => (estadoRuleta = "esperandoAlClic"), 1000);
+        break;
+
+      case "Perder Tiempo":
+        contenedorRuleta.classList.add("resultado-pierde-tiempo");
+        sumarTiempo(30);
+        setTimeout(() => (estadoRuleta = "esperandoAlClic"), 1000);
+        break;
+
+      default:
+        estadoRuleta = "esperandoAlClic";
+        break;
     }
+  }
+
+  botonesRespuesta.forEach((boton) => {
+    boton.addEventListener("click", (evento) => {
+      botonesRespuesta.forEach((btn) => (btn.style.pointerEvents = "none"));
+
+      const respuestaElegida = evento.target.textContent.trim();
+
+      // 2. Comparamos con la respuesta correcta que guardamos antes
+      if (respuestaElegida === respuestaCorrectaActual) {
+        sumarCalabaza(getEquipoActual()?.equipo);
+        evento.target.classList.add("respuesta-correcta");
+      } else {
+        evento.target.classList.add("respuesta-incorrecta");
+        botonesRespuesta.forEach((btn) => {
+          if (btn.textContent === respuestaCorrectaActual) {
+            btn.classList.add("respuesta-correcta");
+          }
+        });
+      }
+
+      // 3. Pequeña pausa para que vean si han acertado o fallado antes de cambiar
+      setTimeout(() => {
+        botonesRespuesta.forEach((btn) => {
+          btn.classList.remove("respuesta-correcta", "respuesta-incorrecta");
+          btn.style.pointerEvents = "auto"; // Volvemos a permitir clics
+        });
+
+        pantallaPreguntas.classList.add("oculto");
+        contenedorRuleta.classList.remove("oculto");
+      }, 2500);
+    });
+  });
 });
