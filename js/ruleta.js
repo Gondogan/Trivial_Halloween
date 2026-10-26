@@ -1,11 +1,8 @@
 import { preguntas } from "../assets/data/questions.js";
-import { quitarCalabaza } from "./state.js";
-import { sumarCalabaza } from "./state.js";
-import { obtenerGrupos } from "./state.js";
+import { quitarCalabaza, sumarCalabaza, getEquipoActual, sumarTiempo, restarTiempo } from "./state.js";
 
 let preguntasUsadas = [];
 let respuestaCorrectaActual = "";
-let equipoActual = "";
 
 function obtenerPreguntaNoRepetida() {
   let disponibles = preguntas.filter(
@@ -25,17 +22,10 @@ function obtenerPreguntaNoRepetida() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  const equipos = obtenerGrupos();
-  if(equipos.length > 0){
-    equipoActual = equipos[equipos.length - 1].equipo;
-  } else {
-    equipoActual = "Equipo Fantasma";
-  }
 
   const ruleta = document.getElementById("ruleta");
   const contenedorRuleta = document.querySelector(".contenedor-ruleta-juego");
   const pantallaPreguntas = document.getElementById("pantallaPreguntas");
-
   const tituloPregunta = document.querySelector(".pregunta-titulo");
   const botonesRespuesta = document.querySelectorAll(".btn-respuesta");
 
@@ -73,10 +63,9 @@ window.addEventListener("DOMContentLoaded", () => {
     const gradosPorOpcion = 360 / opciones.length;
     const posicionActual = rotacionActual % 360;
     const anguloDestino = (360 - opcionSeleccionada * gradosPorOpcion) % 360;
-    const vueltas = 5 * 360;
     const ajuste = (anguloDestino - posicionActual + 360) % 360;
 
-    rotacionActual += vueltas + ajuste;
+    rotacionActual += 5 * 360 + ajuste;
     ruleta.style.transform = `rotate(${rotacionActual}deg)`;
   });
 
@@ -94,7 +83,6 @@ window.addEventListener("DOMContentLoaded", () => {
   function gestionarResultado(resultadoFinal) {
     switch (resultadoFinal) {
       case "Pregunta":
-        console.log("Ha salido una pregunta");
         contenedorRuleta.classList.add("resultado-pregunta");
 
         const nuevaPregunta = obtenerPreguntaNoRepetida();
@@ -122,30 +110,24 @@ window.addEventListener("DOMContentLoaded", () => {
         break;
 
       case "Castigo":
-        quitarCalabaza();
-        // Añadir un alert o mensaje de unos segundos informando que pierden una calabaza
-        console.log("Ha salido un castigo");
         contenedorRuleta.classList.add("resultado-castigo");
+        quitarCalabaza(getEquipoActual()?.equipo);
         setTimeout(() => (estadoRuleta = "esperandoAlClic"), 1000);
         break;
 
       case "Ganar Tiempo":
-        // Ejecutar funcion restarTiempo()
-        // Añadir un alert o mensaje de unos segundos informando que restan tiempo
-        console.log("Se gana tiempo");
         contenedorRuleta.classList.add("resultado-gana-tiempo");
+        restarTiempo(30);
         setTimeout(() => (estadoRuleta = "esperandoAlClic"), 1000);
         break;
 
       case "Perder Tiempo":
-        // Ejecutar funcion sumarTiempo()
-        // Añadir un alert o mensaje de unos segundos informando que suman tiempo
         contenedorRuleta.classList.add("resultado-pierde-tiempo");
+        sumarTiempo(30);
         setTimeout(() => (estadoRuleta = "esperandoAlClic"), 1000);
         break;
 
       default:
-        console.log("Resultado no reconocido");
         estadoRuleta = "esperandoAlClic";
         break;
     }
@@ -159,13 +141,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
       // 2. Comparamos con la respuesta correcta que guardamos antes
       if (respuestaElegida === respuestaCorrectaActual) {
-        console.log("¡Respuesta Correcta!");
-        sumarCalabaza(equipoActual);
+        sumarCalabaza(getEquipoActual()?.equipo);
         evento.target.classList.add("respuesta-correcta");
       } else {
-        console.log("¡Respuesta Incorrecta!");
         evento.target.classList.add("respuesta-incorrecta");
-
         botonesRespuesta.forEach((btn) => {
           if (btn.textContent === respuestaCorrectaActual) {
             btn.classList.add("respuesta-correcta");
