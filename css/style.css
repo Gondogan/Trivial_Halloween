@@ -423,6 +423,54 @@ button[type="submit"]:active, #empezar:active {
 .btn-gameover:active { transform: scale(0.95); }
 
 /* =========================================
+    10. PANTALLA RANKINGS (INICIO)
+==========================================*/
+
+/* Botón de acceso al ranking desde el registro */
+
+/*#btnVerRanking {
+    width: 100%;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #240000, #680000);
+    border: 2px solid #a33b00;
+    color: #f5c16c;
+    font-family: 'Creepster', cursive;
+    font-size: 1.7rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}*/
+#btnVerRanking {
+    display: block;
+    visibility: visible;
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    background: #5c1600;
+    color: orange;
+    border: 2px solid orange;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+#btnVerRanking:hover {
+    background: linear-gradient(135deg, #650000, #a32600);
+    color: #fff0c2;
+    box-shadow: 0 0 20px rgba(255, 80, 0, 0.65);
+    transform: scale(1.04);
+}
+
+#btnVolverRegistro {
+    background-color: #240000;
+    border: 1px solid #a33b00;
+    color: #f5c16c;
+}
+
+#btnVolverRegistro:hover {
+    background-color: #680000;
+}
+
+/* =========================================
    8. PANTALLA DE RANKING (VICTORIA)
 ========================================= */
 .pantalla-ranking { width: 100vw; height: 100vh; background: transparent; backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; z-index: 1000; }

@@ -21,12 +21,15 @@ export const iniciarCronometro = () => {
 
     intervaloCronometro = setInterval(() => {
         segundosTranscurridos++;
-        const minutos = Math.floor(segundosTranscurridos / 60);
-        const segundos = segundosTranscurridos % 60;
-        const segundosFormateados = segundos < 10 ? `0${segundos}` : segundos;
-        tiempoTexto.textContent = `${minutos}:${segundosFormateados}`;
+        pintarCronometro();
     }, 1000);
 }
+
+export const formatearTiempo = (total) => `${Math.floor(total / 60)}:${String(total % 60).padStart(2, '0')}`;
+export const pintarCronometro = () => {
+    const elemento = document.querySelector('.tiempo-texto');
+    if (elemento) elemento.textContent = formatearTiempo(segundosTranscurridos);
+};
 
 export const pararCronometro = () => {
 
@@ -42,7 +45,12 @@ export const obtenerGrupos = () => {
         return [];
     }
 
-    return JSON.parse(gruposGuardados);
+    try {
+        const grupos = JSON.parse(gruposGuardados);
+        return Array.isArray(grupos) ? grupos : [];
+    } catch {
+        return [];
+    }
 }
 
 export const guardarGrupo = () => {
@@ -88,7 +96,8 @@ export const sumarCalabaza = (nombreEquipo) => {
 
             grupos[indice].tiempoFinal = tiempoTotal;
 
-            // LLamar a la funcion que muestra pantalla victoria
+            localStorage.setItem('trivial-grupos', JSON.stringify(grupos));
+            window.dispatchEvent(new CustomEvent('trivial:victoria', { detail: { equipo: grupos[indice] } }));
         }
         localStorage.setItem('trivial-grupos', JSON.stringify(grupos));
         pintarPuntuacion();
@@ -130,10 +139,12 @@ export const pintarPuntuacion = () => {
     });
 }
 
-export const restarTiempo = () => {
-    segundosTranscurridos = Math.max(0, segundosTranscurridos - 30);
+export const restarTiempo = (segundos = 30) => {
+    segundosTranscurridos = Math.max(0, segundosTranscurridos - segundos);
+    pintarCronometro();
 }
 
-export const sumarTiempo = () => {
-    segundosTranscurridos += 30;
+export const sumarTiempo = (segundos = 30) => {
+    segundosTranscurridos += segundos;
+    pintarCronometro();
 }
